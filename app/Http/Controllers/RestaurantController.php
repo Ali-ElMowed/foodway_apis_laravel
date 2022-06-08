@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use App\Models\Review;
+use App\Models\City;
+use App\Models\Category;
+
 
 
 class RestaurantController extends Controller
@@ -133,4 +136,103 @@ class RestaurantController extends Controller
 
         }
     }
+
+    public function addCity(Request $request)
+    {
+        $city = new City;
+        $city->rev_text = $request->rev_text;
+        $city->user_id = $request->user_id;
+        $city->resto_id = $request->resto_id;
+        $city->status = $request->status;
+        $city->save();
+
+        return response()->json([
+            "status" => "success"
+        ], 200);
+    }
+
+    public function getAllCities($id = null)
+    {
+
+        if ($id != null) {
+            $city = City::find($id);
+        } else {
+            $city = City::all();
+        }
+
+        return response()->json([
+            "status" => "Success",
+            "city" => $city
+        ], 200);
+    }
+
+    public function destroyCity($id){
+
+        $city = City::find($id);
+
+        if($city){
+
+            $city->delete();
+            return response()->json([
+                'status'=> 'deleted'
+            ],200);
+
+        }else{
+
+            return response()->json([
+                'status'=>"No  city found"
+            ],404);
+
+        }
+    }
+
+    public function addCategory(Request $request)
+    {
+        $category = new Category;
+        $category->rev_text = $request->rev_text;
+        $category->user_id = $request->user_id;
+        $category->resto_id = $request->resto_id;
+        $category->status = $request->status;
+        $category->save();
+
+        return response()->json([
+            "status" => "success"
+        ], 200);
+    }
+
+    public function getAllCategories($id = null)
+    {
+
+        if ($id != null) {
+            $category = Category::find($id);
+        } else {
+            $category = Category::all();
+        }
+
+        return response()->json([
+            "status" => "Success",
+            "category" => $category
+        ], 200);
+    }
+
+    public function destroyCategory($id){
+
+        $category = Category::find($id);
+
+        if($category){
+
+            $category->delete();
+            return response()->json([
+                'status'=> 'deleted'
+            ],200);
+
+        }else{
+
+            return response()->json([
+                'status'=>"No  category found"
+            ],404);
+
+        }
+    }
+
 }
