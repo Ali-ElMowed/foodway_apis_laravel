@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
+use App\Models\Review;
+
 
 class RestaurantController extends Controller
 {
@@ -68,7 +70,7 @@ class RestaurantController extends Controller
         $resto = Restaurant::find($id);
 
         if($resto){
-            
+
             $resto->delete();
             return response()->json([
                 'status'=> 'deleted'
@@ -78,6 +80,55 @@ class RestaurantController extends Controller
 
             return response()->json([
                 'status'=>"No  resto found"
+            ],404);
+
+        }
+    }
+
+    public function addReview(Request $request)
+    {
+        $review = new Review;
+        $review->rev_text = $request->rev_text;
+        $review->user_id = $request->user_id;
+        $review->resto_id = $request->resto_id;
+        $review->status = $request->status;
+        $review->save();
+
+        return response()->json([
+            "status" => "success"
+        ], 200);
+    }
+
+    public function getAllReviews($id = null)
+    {
+
+        if ($id != null) {
+            $review = Review::find($id);
+        } else {
+            $review = Review::all();
+        }
+
+        return response()->json([
+            "status" => "Success",
+            "review" => $review
+        ], 200);
+    }
+
+    public function destroyReview($id){
+
+        $review = Review::find($id);
+
+        if($review){
+
+            $review->delete();
+            return response()->json([
+                'status'=> 'deleted'
+            ],200);
+
+        }else{
+
+            return response()->json([
+                'status'=>"No  review found"
             ],404);
 
         }
