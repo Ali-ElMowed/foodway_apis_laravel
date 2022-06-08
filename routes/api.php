@@ -15,6 +15,13 @@ Route::delete('/delete_resto/{id}', [RestaurantController::class, 'destroyResto'
 Route::post('/add_review', [RestaurantController::class, 'addReview']);
 Route::get('/reviews/{id?}', [RestaurantController::class, 'getAllReviews']);
 Route::delete('/delete_review/{id}', [RestaurantController::class, 'destroyReview']);
+Route::post('/add_city', [RestaurantController::class, 'addCity']);
+Route::get('/cities/{id?}', [RestaurantController::class, 'getAllCities']);
+Route::delete('/delete_city/{id}', [RestaurantController::class, 'destroyCity']);
+Route::post('/add_category', [RestaurantController::class, 'addCategory']);
+Route::get('/categories/{id?}', [RestaurantController::class, 'getAllCategories']);
+Route::delete('/delete_category/{id}', [RestaurantController::class, 'destroyCategory']);
+
 
 
 
